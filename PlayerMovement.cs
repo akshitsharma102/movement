@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveInput = Input.GetAxisRaw("Horizontal") * runSpeed;
 
+        if (anim.GetBool("Punch")) MoveInput = 0;
+
         anim.SetFloat("Speed", Mathf.Abs(MoveInput));
 
         rb2d.velocity = new Vector2(MoveInput, rb2d.velocity.y);
@@ -72,11 +74,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(groundCheck.position, range);
-    }
 
     void flip ()
     {
