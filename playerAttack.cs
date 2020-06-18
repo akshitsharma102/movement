@@ -15,7 +15,7 @@ public class playerAttack : MonoBehaviour
     public Transform attackPos;
     public LayerMask enemyLayer;
 
-    public float attackRange;
+    float attackRange;
     public int daimage;
     void Awake()
     {
@@ -34,13 +34,20 @@ public class playerAttack : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if(combo < 2)
+            if (combo < 2)
             {
                 anim.SetBool("Punch", true);
                 activeTimeToReset = true;
                 currentComboTimer = defaultComboTimer;
 
-                //Punch ke lia h
+                Collider2D[] attackEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyLayer);
+
+                for (int i = 0; i < attackEnemies.Length; i++)
+                {
+             
+                    print("hit");
+                }
+
             }
             else
             {
@@ -73,5 +80,12 @@ public class playerAttack : MonoBehaviour
                 currentComboTimer = defaultComboTimer;
             }
         }
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
 }
